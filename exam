@@ -1,0 +1,79 @@
+class Bank:
+    def __init__(self):
+        self.accounts = {}
+
+    def create_account(self):
+        name = input("Enter name: ")
+        acc_no = input("Enter account number: ")
+        pin = input("Set 4-digit PIN: ")
+        self.accounts[acc_no] = {
+            "name": name,
+            "pin": pin,
+            "balance": 0
+        }
+        print("Account created successfully!")
+
+    def login(self):
+        acc_no = input("Enter account number: ")
+        pin = input("Enter PIN: ")
+
+        if acc_no in self.accounts and self.accounts[acc_no]["pin"] == pin:
+            print(f"Welcome, {self.accounts[acc_no]['name']}!")
+            self.account_menu(acc_no)
+        else:
+            print("Invalid account number or PIN.")
+
+    def account_menu(self, acc_no):
+        while True:
+            print("\n1. Deposit")
+            print("2. Withdraw")
+            print("3. Check Balance")
+            print("4. Logout")
+
+            choice = input("Choose option: ")
+
+            if choice == "1":
+                amount = float(input("Enter amount: "))
+                self.accounts[acc_no]["balance"] += amount
+                print("Amount deposited.")
+
+            elif choice == "2":
+                amount = float(input("Enter amount: "))
+                if amount <= self.accounts[acc_no]["balance"]:
+                    self.accounts[acc_no]["balance"] -= amount
+                    print("Amount withdrawn.")
+                else:
+                    print("Insufficient balance.")
+
+            elif choice == "3":
+                print("Balance:", self.accounts[acc_no]["balance"])
+
+            elif choice == "4":
+                print("Logged out.")
+                break
+
+            else:
+                print("Invalid option.")
+
+    def run(self):
+        while True:
+            print("\n=== BANKING APP ===")
+            print("1. Create Account")
+            print("2. Login")
+            print("3. Exit")
+
+            choice = input("Choose option: ")
+
+            if choice == "1":
+                self.create_account()
+            elif choice == "2":
+                self.login()
+            elif choice == "3":
+                print("Goodbye!")
+                break
+            else:
+                print("Invalid choice.")
+
+
+bank = Bank()
+bank.run()
